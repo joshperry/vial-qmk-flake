@@ -2,7 +2,7 @@
   # Probably need to add `services.udev.packages = [ pkgs.qmk-udev-rules ];` to `configuration.nix`.
   description = "Flake for building vial-qmk firmware";
 
-  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
   inputs.nixos-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
   # The vial fork of qmk, stores the keyboard config in on-keyboard memory. and 
@@ -24,12 +24,6 @@
           #pkgs.unstable
           (final: prev: {
             unstable = nixos-unstable.legacyPackages."${prev.system}";
-          })
-
-          # Want python310
-          (final: prev: {
-            python3 = final.python310;
-            python3Packages = final.python310.pkgs;
           })
         ];
       };
@@ -54,8 +48,6 @@
           alias flash="make -C ${vial-qmk} BUILD_DIR=`pwd`/build COPY=echo -j8 $KEYBOARD:$KEYMAP:flash"
           echo 'hi! run `build` to build the firmware, and `flash` to, well, flash it.'
           echo 'take a look in the `flake.nix` if you want to change the '"keyboard($KEYBOARD) and/or map($KEYMAP)."
-          type build
-          type flash
         '';
       };
 
